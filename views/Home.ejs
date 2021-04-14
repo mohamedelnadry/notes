@@ -1,0 +1,100 @@
+<%- include('./shared/Header.ejs') %>
+    <div class="container my-5">
+        <div class="col-md-12 m-auto text-right">
+            <a class="add p-2 btn" data-toggle="modal" data-target="#addNote"><i class="fas fa-plus-circle"></i>
+                Add
+                New</a>
+        </div>
+    </div>
+    <div class="modal fade" id="DeletModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form action="/delete" method="post">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete Item</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input hidden type="text" class="form-control" name="DeletPost" id="delete">
+                        are you sure..?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">no</button>
+                        <button type="submit" class="btn btn-primary">yes</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal fade" id="addNote" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form action="/addNote" method="POST">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input placeholder="Type Title" name="title" class="form-control" type="text">
+                        <textarea class="form-control my-2" placeholder="Type your note" name="desc" id="" cols="30"
+                            rows="10"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-info"><i class="fas fa-plus-circle"></i> Add Note</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal fade" id="editNote" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form action="/editnote" method="POST">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input hidden type="text" name="_id" id="inputID">
+                        <input placeholder="Type Title" name="title" id="titleInput" class="form-control" type="text">
+                        <textarea class="form-control my-2" placeholder="Type your note" name="desc" id="descInput" cols="30"
+                            rows="10"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-info">edit note</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <div class="row">
+            <% for( let index=0; index < posts.length; index++ ) { %>
+                <div class="col-md-4 my-4">
+
+                    <div class="note p-4">
+                        <h3 id="title" class="float-left">
+                            <%= posts[index].title %>
+                        </h3>
+                        <a data-toggle="modal" data-target="#editNote" onclick="getPost('<%= posts[index]._id %>')"><i class="fas fa-edit float-right edit"></i></a>
+                        <a data-toggle="modal" data-target="#DeletModel" onclick="getID('<%= posts[index]._id %>')"> <i
+                                class="fas fa-trash-alt float-right px-3 del"></i></a>
+                        <span class="clearfix"></span>
+                        <p id="desc">
+                            <%= posts[index].desc %>
+                        </p>
+                    </div>
+                </div>
+                <% } %>
+
+        </div>
+    </div>
+
+
+    <%- include('./shared/Footer.ejs') %>
